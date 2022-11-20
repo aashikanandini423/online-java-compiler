@@ -1,3 +1,3 @@
 # online-java-compiler
 
-A web application that can be used in a classroom setting for a Java programming course.
+A web application that can be used by Students and Instructors in a Java programming course for compiling and running Java programs.
