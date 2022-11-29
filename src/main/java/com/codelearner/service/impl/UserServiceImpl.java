@@ -30,5 +30,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    
+    @Override
+    public User login(LoginUserRequest loginUserRequest) {
+        return userRepository.findByUserIdAndPassword(loginUserRequest.getUserId(), loginUserRequest.getPassword());
+    }
+
+    @Override
+    public List<String> getAllStudents() {
+        List<User> students = userRepository.findByRole(Role.Student.name());
+        return students.stream().map(s ->s.getUserId()).collect(Collectors.toList());
+    }
 }
