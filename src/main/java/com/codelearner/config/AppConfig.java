@@ -4,21 +4,20 @@ import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Configuration
 @ComponentScan(basePackages = "com.codelearner")
 @EnableMongoRepositories(basePackages = "com.codelearner")
 @SpringBootApplication
-public class AppConfig {
+public class AppConfig extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppConfig.class, args);
