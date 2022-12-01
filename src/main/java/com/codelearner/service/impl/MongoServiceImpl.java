@@ -76,7 +76,39 @@ public class MongoServiceImpl implements MongoService {
         return codeId.toString();
     }
 
-    
+    /**
+     * Fetch problem snippets for users
+     *
+     * @param language
+     * @return
+     */
+    @Override
+    public List<ProblemResponse> fetchProblemsByLanguage(String language) {
+        GridFSFindIterable results = gridOperations.find(new Query().addCriteria(Criteria.where("metadata.language").is(language))
+                .addCriteria(Criteria.where("metadata.questionId").is("")));
+        List<Problem> files = new ArrayList<>();
 
+        for(GridFSFile result : results) {
+            Problem problem	 =	dozerMapper.map(result, Problem.class);
+            problem.setId(((BsonObjectId) result.getId()).getValue().toString());
+            files.add(problem);
+        }
+
+        if(CollectionUtils.isNotEmpty(files)){
+            List<ProblemResponse>  problemResponses = new ArrayList<ProblemResponse>();
+            for(Problem problem : files){
+                ProblemResponse  problemResponse = dozerMapper.map(problem, ProblemResponse.class);
+                problemResponse.setProblemId(problem.getId().toString());
+                problemResponses.add(problemResponse);
+            }
+            return problemResponses;
+
+        }else{
+            return new ArrayList<>();
+        }
+    }
+
+
+    
 
 }
