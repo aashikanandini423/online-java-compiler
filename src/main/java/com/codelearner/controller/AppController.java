@@ -90,6 +90,48 @@ public class AppController {
 		return response;
 	}
 
+	/**
+	 * Compile the code snippet and return the output if there are no errors
+	 * Return the errors if found
+	 *
+	 * @param problem
+	 * @return
+	 */
+	@RequestMapping(value="/compileCode", method = RequestMethod.POST)
+	public CompileResponse compileCode(@RequestBody ProblemCreateRequest problem, HttpServletRequest request) {
+		String userRole = (String) request.getSession().getAttribute("role");
+		CompileResponse compiler = new CompileResponse();
+		List<String> output = null;
+		if (Role.Student.name().equals(userRole) || problem.getAutoGraderCode() == null) {
+			File codeFile = fileOperations.createFile(problem.getCode(), problem.getClassName(), problem.getLanguage());
+			if (StringUtils.isNotBlank(problem.getLanguage()) && problem.getLanguage().equals("Java")) {
+				output = fileOperations.syntaxChecker(codeFile.getAbsolutePath());
+				if (CollectionUtils.isNotEmpty(output)) {
+					compiler.setCompiledOutput(output);
+					compiler.setFlag(false);
+				} else {
+					compiler.setCompiledOutput(fileOperations.executeCode(codeFile));
+					compiler.setFlag(true);
+
+				}
+			}
+		} else if (Role.Instructor.name().equals(userRole)) {
+			File codeFile = fileOperations.createFile(problem.getCode(), problem.getClassName(), problem.getLanguage());
+			if (StringUtils.isNotBlank(problem.getLanguage()) && problem.getLanguage().equals("Java")) {
+				try {
+					Files.deleteIfExists(Paths.get(codeFile.getParentFile().getAbsolutePath() + "/" + codeFile.getName().substring(0, codeFile.getName().indexOf(".")) + ".class"));
+					fileOperations.runProcess("javac " + codeFile.getAbsolutePath());
+					output = fileOperations.runProcess("java -cp " + codeFile.getParentFile().getAbsolutePath() + " " +  codeFile.getName().substring(0, codeFile.getName().indexOf(".")));
+					compiler.setCompiledOutput(output);
+					compiler.setFlag(true);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return compiler;
+	}
+
 
 	
 }
