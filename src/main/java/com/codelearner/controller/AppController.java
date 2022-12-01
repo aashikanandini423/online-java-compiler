@@ -150,6 +150,20 @@ public class AppController {
 		return compiler;
 	}
 
+	/**
+	 * Fetch the list of programming problems
+	 *
+	 * @param lang
+	 * @return
+	 */
+	@RequestMapping(value="/fetchProblemsByLanguage", method = RequestMethod.GET)
+	public ProblemResponseWrapper fetchProblems(@RequestParam(value = "lang") final String lang) {
+		ProblemResponseWrapper problems = new ProblemResponseWrapper();
+		problems.setProblems(mongoService.fetchProblemsByLanguage(lang));
+		return problems;
+	}
+
+
 	
 	
 }
