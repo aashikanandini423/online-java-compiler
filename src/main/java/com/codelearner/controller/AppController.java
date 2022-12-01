@@ -91,6 +91,24 @@ public class AppController {
 	}
 
 	/**
+	 * Saves the user entered code snippet as a Java file.
+	 * Save the file in Mongo DB
+	 *
+	 * @param problem
+	 */
+	@RequestMapping(value="/submitCode", method = RequestMethod.POST)
+    public void submitProblem(@RequestBody ProblemCreateRequest problem, HttpServletRequest request){
+		FileSaveRequest fileSaveRequest = dozerMapper.map(problem, FileSaveRequest.class);
+		fileSaveRequest.setCode(fileOperations.createFile(problem.getCode(), problem.getClassName(), problem.getLanguage()));
+
+		String userId = (String) request.getSession().getAttribute("userId");
+		String userRole = (String) request.getSession().getAttribute("role");
+		fileSaveRequest.setParticipants(userService.getAllStudents());
+        String objectId = mongoService.saveCodeFile(fileSaveRequest, userRole);
+
+    }
+
+	/**
 	 * Compile the code snippet and return the output if there are no errors
 	 * Return the errors if found
 	 *
@@ -132,6 +150,6 @@ public class AppController {
 		return compiler;
 	}
 
-
+	
 	
 }
