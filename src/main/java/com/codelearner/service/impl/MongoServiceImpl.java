@@ -162,7 +162,24 @@ public class MongoServiceImpl implements MongoService {
         return null;
     }
 
-    
+
+    /**
+     * Fetch all submitted answers for a question id
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Problem> fetchAnswersforQuestion(String id) {
+        List<Problem> answers = new ArrayList<>();
+        GridFSFindIterable gridFiles = gridOperations.find(new Query().addCriteria(Criteria.where("metadata.questionId").is(id)));
+            for(GridFSFile result : gridFiles){
+                Problem problem	 =	dozerMapper.map(result, Problem.class);
+                problem.setId(((BsonObjectId) result.getId()).getValue().toString());
+                answers.add(problem);
+            }
+        return answers;
+    }
 
 
 }
