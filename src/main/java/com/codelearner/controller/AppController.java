@@ -163,6 +163,62 @@ public class AppController {
 		return problems;
 	}
 
+	/**
+	 * Fetch the code snippet for a problem id from Mongo DB
+	 *
+	 * @param problemId
+	 * @return
+	 */
+	@RequestMapping(value="/fetchProblemCode", method = RequestMethod.GET)
+	public CodeDetailsWrapper fetchProblemCode(@RequestParam(value = "problemId") final String problemId, HttpServletRequest request){
+		CodeDetailsWrapper codeWrapper = new CodeDetailsWrapper();
+		List<ProblemCode> answersResponse = new ArrayList<>();
+		Problem problem = mongoService.fetchFilesById(problemId);
+		String userRole = (String) request.getSession().getAttribute("role");
+
+		if(null != problem){
+			List<String> codeLines = mongoService.fetchCode(problem.getId(),"_id");
+
+			if (Role.Student.name().equals(userRole)) {
+				codeLines.remove(codeLines.size() - 1);
+				codeLines.add("public static void main(String[] args) {");
+				codeLines.add("\tSystem.out.println(\"Hello World\")");
+				codeLines.add("}");
+				codeLines.add("}");
+			}
+
+			if(CollectionUtils.isNotEmpty(codeLines)){
+				ProblemCode problemCode = new ProblemCode();
+				problemCode.setProblemId(problem.getId());
+				problemCode.setProblemDesc(problem.getMetadata().getDescription());
+				problemCode.setProblemTitle(problem.getMetadata().getTitle());
+				problemCode.setCodeLines(codeLines);
+				problemCode.setClassName(problem.getFilename());
+				codeWrapper.setProblem(problemCode);
+			}
+		}
+
+		List<Problem> answers = mongoService.fetchAnswersforQuestion(problemId);
+		if(CollectionUtils.isNotEmpty(answers)){
+			for (Problem answer : answers) {
+				List<String> codeLines = mongoService.fetchCode(answer.getId(),"_id");
+				ProblemCode answersCode = new ProblemCode();
+				answersCode.setProblemId(answer.getId());
+				answersCode.setProblemDesc(answer.getMetadata().getDescription());
+				answersCode.setProblemTitle(answer.getMetadata().getTitle());
+				answersCode.setAnsweredBy(answer.getMetadata().getAnsweredBy());
+				answersCode.setCodeLines(codeLines);
+				answersCode.setClassName(answer.getFilename());
+				answersCode.setFeedback(answer.getMetadata().getFeedback());
+				answersCode.setRating(answer.getMetadata().getRating());
+				answersResponse.add(answersCode);
+			}
+
+		}
+		codeWrapper.setAnswers(answersResponse);
+		return codeWrapper;
+
+	}
 
 	
 	
