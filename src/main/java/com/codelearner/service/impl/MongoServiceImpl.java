@@ -144,7 +144,25 @@ public class MongoServiceImpl implements MongoService {
 
     }
 
+    /**
+     * Fetch problem code snippets by id
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Problem fetchFilesById(String id) {
+        ObjectId objectId = new ObjectId(id);
+        GridFSFile gridFile = gridOperations.findOne(new Query().addCriteria(Criteria.where("_id").is(objectId)));
+        if(null != gridFile){
+            Problem problem	= dozerMapper.map(gridFile, Problem.class);
+            problem.setId(((BsonObjectId) gridFile.getId()).getValue().toString());
+            return problem;
+        }
+        return null;
+    }
 
+    
 
 
 }
