@@ -108,7 +108,43 @@ public class MongoServiceImpl implements MongoService {
         }
     }
 
+    /**
+     * Query the source file snippet associated with admin user or candidate.
+     * GridFSDBFile file is converted to List of Strings
+     *
+     * @param id
+     * @param fieldName
+     * @return
+     */
+    @Override
+    public List<String> fetchCode(String id, String fieldName) {
+        GridFSFindIterable result = null;
+        ObjectId objectId = new ObjectId(id);
+        List<String> codeLines = new ArrayList<String>();
+        if (fieldName.equals("_id")) {
+            result = gridOperations.find(new Query().addCriteria(Criteria.where(fieldName).is(objectId)));
+        } else {
+            result = gridOperations.find(new Query().addCriteria(Criteria.where(fieldName).is(id)));
+        }
 
-    
+        for (GridFSFile file : result) {
+            try {
+                InputStream content = gridOperations.getResource(file).getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(content));
+                String line = null;
+                while ((line = br.readLine()) != null) {
+                    codeLines.add(line);
+                }
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return codeLines;
+
+    }
+
+
+
 
 }
