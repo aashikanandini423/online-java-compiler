@@ -220,6 +220,15 @@ public class AppController {
 
 	}
 
-	
+
+	/**
+	 * Rate a submitted answer
+	 *
+	 * @param update
+	 */
+	@RequestMapping(value="/rateAnswer", method = RequestMethod.POST)
+    public void rateAnswer(@RequestBody UpdateRequest update){
+        mongoService.updateFeedbackAndRating(update);
+    }
 	
 }
