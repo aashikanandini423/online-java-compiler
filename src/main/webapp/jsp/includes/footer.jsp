@@ -10,10 +10,10 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.min.js"></script>
-<script type="text/javascript" src="lib/jquery.iframe-transport.js"></script>
-<script type="text/javascript" src="lib/jquery.minicolors.min.js"></script>
-<script type="text/javascript" src="lib/jquery.switchButton.js"></script>
-<script type="text/javascript" src="lib/jquery.ui.widget.js"></script>
-<script type="text/javascript" src="lib/jquery.rating.pack.js"></script>
-<script type="text/javascript" src="lib/jquery.MetaData.js"></script>
-<script type="text/javascript" src="lib/jquery.rating.js"></script>
+<script type="text/javascript" src="https://cdn.statically.io/gh/striderarun/files/main/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="https://cdn.statically.io/gh/striderarun/files/main/jquery.minicolors.min.js"></script>
+<script type="text/javascript" src="https://cdn.statically.io/gh/striderarun/files/main/jquery.switchButton.js"></script>
+<script type="text/javascript" src="https://cdn.statically.io/gh/striderarun/files/main/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="https://cdn.statically.io/gh/striderarun/files/main/jquery.rating.pack.js"></script>
+<script type="text/javascript" src="https://cdn.statically.io/gh/striderarun/files/main/jquery.MetaData.js"></script>
+<script type="text/javascript" src="https://cdn.statically.io/gh/striderarun/files/main/jquery.rating.js"></script>
