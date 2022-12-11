@@ -181,5 +181,28 @@ public class MongoServiceImpl implements MongoService {
         return answers;
     }
 
+    /**
+     * Save feed back and rating on a submitted answer
+     *
+     * @param updateRequest
+     */
+    @Override
+    public void updateFeedbackAndRating(UpdateRequest updateRequest) {
+        ObjectId objectId = new ObjectId(updateRequest.getAnswerId());
+        GridFSFile gridFile = gridOperations.findOne(new Query().addCriteria(Criteria.where("_id").is(objectId)));
+        if(null != gridFile) {
+            try {
+                InputStream inputStream = gridOperations.getResource(gridFile).getInputStream();
+                gridFile.getMetadata().put("feedback", updateRequest.getFeedback());
+                gridFile.getMetadata().put("rating", updateRequest.getRating());
+
+                gridOperations.store(inputStream, gridFile.getFilename(), "application/octet-stream", gridFile.getMetadata());
+                gridOperations.delete(new Query().addCriteria(Criteria.where("_id").is(objectId)));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
 
 }
