@@ -9,10 +9,10 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.2/select2.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.min.js"></script>
 <script type="text/javascript" src="lib/jquery.iframe-transport.js"></script>
 <script type="text/javascript" src="lib/jquery.minicolors.min.js"></script>
 <script type="text/javascript" src="lib/jquery.switchButton.js"></script>
-<script type="text/javascript" src="lib/jquery.ui.timepicker.js"></script>
 <script type="text/javascript" src="lib/jquery.ui.widget.js"></script>
 <script type="text/javascript" src="lib/jquery.rating.pack.js"></script>
 <script type="text/javascript" src="lib/jquery.MetaData.js"></script>
