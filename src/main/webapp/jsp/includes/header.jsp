@@ -1,5 +1,5 @@
-<link media="all" type="text/css" href="css/bootstrap-responsive.css" rel="stylesheet">
-<link media="all" type="text/css" href="css/bootstrap.css" rel="stylesheet">
+<link media="all" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.1/css/bootstrap-responsive.css" rel="stylesheet">
+<link media="all" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.css" rel="stylesheet">
 <link media="all" type="text/css" href="css/filter-dropdown.css" rel="stylesheet">
 <link media="all" type="text/css" href="css/jquery-ui.css" rel="stylesheet">
 <link media="all" type="text/css" href="css/jquery.dataTables.css" rel="stylesheet">
